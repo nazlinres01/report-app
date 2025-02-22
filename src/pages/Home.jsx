@@ -122,7 +122,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
-    padding: "20px",
+    padding: "20px 40px",
     boxSizing: "border-box",
   },
   title: {
