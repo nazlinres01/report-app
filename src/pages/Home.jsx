@@ -42,62 +42,51 @@ function Home() {
 
   return (
     <div style={styles.page}>
-      <div style={styles.container}>
-        <h2 style={styles.title}>📌 Günlük Rapor</h2>
+      <h2 style={styles.title}>📌 Günlük Rapor</h2>
 
-        <div style={styles.row}>
-          <input type="text" value={isim} onChange={(e) => setIsim(e.target.value)} placeholder="Adınız" style={styles.input} />
-          <input type="number" value={calismaSuresi} onChange={(e) => setCalismaSuresi(e.target.value)} placeholder="Çalışma Süresi (saat)" style={styles.input} />
-        </div>
-
-        <textarea value={hedefler} onChange={(e) => setHedefler(e.target.value)} placeholder="Hedefleriniz" style={styles.textarea}></textarea>
-        <textarea value={yapilanlar} onChange={(e) => setYapilanlar(e.target.value)} placeholder="Yaptıklarınız" style={styles.textarea}></textarea>
-        <textarea value={tamamlanmayanlar} onChange={(e) => setTamamlanmayanlar(e.target.value)} placeholder="Tamamlanmayanlar" style={styles.textarea}></textarea>
-        <textarea value={notlar} onChange={(e) => setNotlar(e.target.value)} placeholder="Ekstra Notlar" style={styles.textarea}></textarea>
-
-        <p style={styles.date}>📅 {tarih}</p>
-
-        <div style={styles.fileUpload}>
-          <input type="file" onChange={handleGorselYukle} />
-          {gorseller.length > 0 && (
-            <div style={styles.imageList}>
-              {gorseller.map((gorsel, index) => (
-                <div key={index} style={styles.imageItem}>
-                  <p style={styles.imageName}>{gorsel.name}</p>
-                  <button onClick={() => handleGorselSil(index)} style={styles.deleteButton}>❌</button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {hata && <p style={styles.error}>{hata}</p>}
-
-        <button onClick={handleClick} style={styles.button}>📄 Raporu Görüntüle</button>
+      <div style={styles.row}>
+        <input type="text" value={isim} onChange={(e) => setIsim(e.target.value)} placeholder="Adınız" style={styles.input} />
+        <input type="number" value={calismaSuresi} onChange={(e) => setCalismaSuresi(e.target.value)} placeholder="Çalışma Süresi (saat)" style={styles.input} />
       </div>
+
+      <textarea value={hedefler} onChange={(e) => setHedefler(e.target.value)} placeholder="Hedefleriniz" style={styles.textarea}></textarea>
+      <textarea value={yapilanlar} onChange={(e) => setYapilanlar(e.target.value)} placeholder="Yaptıklarınız" style={styles.textarea}></textarea>
+      <textarea value={tamamlanmayanlar} onChange={(e) => setTamamlanmayanlar(e.target.value)} placeholder="Tamamlanmayanlar" style={styles.textarea}></textarea>
+      <textarea value={notlar} onChange={(e) => setNotlar(e.target.value)} placeholder="Ekstra Notlar" style={styles.textarea}></textarea>
+
+      <p style={styles.date}>📅 {tarih}</p>
+
+      <div style={styles.fileUpload}>
+        <input type="file" onChange={handleGorselYukle} />
+        {gorseller.length > 0 && (
+          <div style={styles.imageList}>
+            {gorseller.map((gorsel, index) => (
+              <div key={index} style={styles.imageItem}>
+                <p style={styles.imageName}>{gorsel.name}</p>
+                <button onClick={() => handleGorselSil(index)} style={styles.deleteButton}>❌</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {hata && <p style={styles.error}>{hata}</p>}
+
+      <button onClick={handleClick} style={styles.button}>📄 Raporu Görüntüle</button>
     </div>
   );
 }
 
-// 🌟 TAM EKRAN MOBİL UYUM STİLLERİ
 const styles = {
   page: {
     width: "100vw",
     height: "100vh",
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
     padding: "0",
-  },
-  container: {
-    width: "100%",
-    height: "100%",
-    background: "white",
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    overflowY: "auto",
   },
   title: {
     fontSize: "24px",
@@ -106,11 +95,13 @@ const styles = {
   },
   row: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     gap: "10px",
+    width: "100%",
+    justifyContent: "center",
   },
   input: {
-    width: "100%",
+    flex: 1,
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
