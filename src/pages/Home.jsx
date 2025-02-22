@@ -77,7 +77,7 @@ const styles = {
   },
   doubleInputContainer: {
     display: "flex",
-    gap: "10px",
+    gap: "4px",
     width: "100%",
     flexWrap: "wrap",
     justifyContent: "center",
