@@ -25,40 +25,27 @@ function Home() {
     }
   };
 
-  const handleGorselYukle = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setGorseller((prevGorseller) => [...prevGorseller, { src: reader.result, name: file.name }]);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleGorselSil = (index) => {
-    setGorseller((prevGorseller) => prevGorseller.filter((_, i) => i !== index));
-  };
-
   return (
     <div style={styles.page}>
       <h2 style={styles.title}>📌 Günlük Rapor</h2>
-
+      
       <div style={styles.row}>
-        <input
-          type="text"
-          value={isim}
-          onChange={(e) => setIsim(e.target.value)}
-          placeholder="Adınız"
-          style={styles.input}
-        />
-        <input
-          type="number"
-          value={calismaSuresi}
-          onChange={(e) => setCalismaSuresi(e.target.value)}
-          placeholder="Çalışma Süresi (saat)"
-          style={styles.input}
-        />
+        <div style={styles.doubleInputContainer}>
+          <input
+            type="text"
+            value={isim}
+            onChange={(e) => setIsim(e.target.value)}
+            placeholder="Adınız"
+            style={styles.doubleInput}
+          />
+          <input
+            type="number"
+            value={calismaSuresi}
+            onChange={(e) => setCalismaSuresi(e.target.value)}
+            placeholder="Çalışma Süresi (saat)"
+            style={styles.doubleInput}
+          />
+        </div>
       </div>
 
       <textarea
@@ -85,30 +72,12 @@ function Home() {
         placeholder="Ekstra Notlar"
         style={styles.textarea}
       ></textarea>
-
+      
       <p style={styles.date}>📅 {tarih}</p>
-
-      <div style={styles.fileUpload}>
-        <input type="file" onChange={handleGorselYukle} />
-        {gorseller.length > 0 && (
-          <div style={styles.imageList}>
-            {gorseller.map((gorsel, index) => (
-              <div key={index} style={styles.imageItem}>
-                <p style={styles.imageName}>{gorsel.name}</p>
-                <button onClick={() => handleGorselSil(index)} style={styles.deleteButton}>
-                  ❌
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
+      
       {hata && <p style={styles.error}>{hata}</p>}
-
-      <button onClick={handleClick} style={styles.button}>
-        📄 Raporu Görüntüle
-      </button>
+      
+      <button onClick={handleClick} style={styles.button}>📄 Raporu Görüntüle</button>
     </div>
   );
 }
@@ -132,14 +101,17 @@ const styles = {
   },
   row: {
     display: "flex",
-    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
+    marginBottom: "10px",
+  },
+  doubleInputContainer: {
+    display: "flex",
     gap: "10px",
     width: "100%",
-    justifyContent: "center",
-    flexWrap: "wrap",
   },
-  input: {
-    width: "180px",
+  doubleInput: {
+    flex: 1,
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
