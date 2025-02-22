@@ -118,37 +118,41 @@ function Home() {
 
 const styles = {
   page: {
-    width: "100vw",
-    height: "100vh",
+    width: "100%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
-    padding: "0",
+    padding: "20px",
     boxSizing: "border-box",
+    overflowX: "hidden", // Taşma engellendi
   },
   title: {
     fontSize: "24px",
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: "20px",
   },
   row: {
     display: "flex",
     flexDirection: "row",
-    gap: "15px",
+    gap: "10px",
     width: "100%",
     justifyContent: "center",
-    flexWrap: "wrap", 
+    flexWrap: "wrap", // Mobilde düzeni bozmadan sarma
+    marginBottom: "20px",
   },
   input: {
     flex: 1,
     maxWidth: "250px",
-    padding: "14px",
+    padding: "12px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
     marginBottom: "10px",
+    boxSizing: "border-box",
   },
   textarea: {
     width: "100%",
@@ -158,7 +162,8 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
-    marginBottom: "10px",
+    marginBottom: "15px",
+    boxSizing: "border-box",
   },
   button: {
     padding: "14px",
@@ -170,14 +175,19 @@ const styles = {
     cursor: "pointer",
     width: "100%",
     maxWidth: "300px",
+    marginBottom: "20px",
   },
   error: {
     color: "red",
     fontSize: "16px",
     textAlign: "center",
+    marginBottom: "20px",
   },
   fileUpload: {
-    marginBottom: "15px",
+    marginBottom: "20px",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
   },
   imageList: {
     display: "flex",
@@ -202,23 +212,41 @@ const styles = {
   date: {
     fontSize: "16px",
     color: "#555",
-    margin: "10px 0",
+    marginBottom: "15px",
   },
-  // Medya sorguları eklenerek mobil uyumluluk sağlandı
-  "@media (max-width: 600px)": {
+  // Mobil uyumlu medya sorguları
+  "@media (max-width: 768px)": {
+    page: {
+      padding: "10px",
+    },
+    title: {
+      fontSize: "22px",
+      marginBottom: "15px",
+    },
+    input: {
+      maxWidth: "200px", // Mobilde daha dar input alanları
+    },
+    button: {
+      fontSize: "16px", // Buton font boyutunu küçültüyoruz
+      padding: "12px",
+    },
+    textarea: {
+      height: "80px", // Textarea'yı mobilde biraz daha küçük yapıyoruz
+    },
+  },
+  "@media (max-width: 480px)": {
     title: {
       fontSize: "20px",
     },
     input: {
-      maxWidth: "200px", // Mobilde input genişliklerini daralt
+      maxWidth: "180px", // Mobilde daha da daraltıyoruz
     },
     button: {
-      fontSize: "16px", // Buton font boyutunu küçült
-      maxWidth: "250px", // Buton genişliğini sınırladım
+      fontSize: "14px",
+      padding: "10px",
     },
     textarea: {
-      fontSize: "14px", // Textarea font boyutunu küçült
-      height: "80px", // Textarea yüksekliklerini biraz küçülttüm
+      fontSize: "14px", // Mobilde textareanın fontunu küçültüyoruz
     },
   },
 };
