@@ -143,7 +143,8 @@ const styles = {
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    maxWidth: "180px", // Genişliği kısıtlamak için
+    maxWidth: "160px", // Genişliği daha da daraltıyorum
+    minWidth: "120px", // En az 120px genişlik olsun
   },
   textarea: {
     width: "100%",
