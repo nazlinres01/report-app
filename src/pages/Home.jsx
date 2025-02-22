@@ -135,7 +135,6 @@ const styles = {
     gap: "10px",
     width: "100%",
     justifyContent: "center",
-    flexWrap: "wrap", // Mobil uyumlu olması için
   },
   input: {
     flex: 1,
@@ -143,8 +142,8 @@ const styles = {
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    maxWidth: "160px", // Genişliği daha da daraltıyorum
-    minWidth: "120px", // En az 120px genişlik olsun
+    minWidth: "120px",
+    maxWidth: "180px",
   },
   textarea: {
     width: "100%",
@@ -168,29 +167,6 @@ const styles = {
     color: "red",
     fontSize: "16px",
     textAlign: "center",
-  },
-  fileUpload: {
-    marginTop: "20px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  imageList: {
-    marginTop: "10px",
-  },
-  imageItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  },
-  imageName: {
-    fontSize: "14px",
-  },
-  deleteButton: {
-    backgroundColor: "transparent",
-    border: "none",
-    color: "red",
-    cursor: "pointer",
   },
 };
 
