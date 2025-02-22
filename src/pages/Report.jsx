@@ -8,12 +8,13 @@ function Report() {
   const { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorseller } = location.state || {};
   const [pdfUrl, setPdfUrl] = useState(null);
 
-  const handleViewPDF = () => {
+  const handleViewPDF = async () => {
     const pdf = new jsPDF("p", "mm", "a4");
     const pageWidth = pdf.internal.pageSize.getWidth();
     const margin = 20;
     let y = 30;
 
+    // PDF içeriğini oluşturma
     pdf.setTextColor(50, 50, 50);
     pdf.setFontSize(26);
     pdf.setFont("times", "bold");
@@ -89,11 +90,12 @@ function Report() {
           });
         }
       }
-      const output = pdf.output("datauristring"); // data URL olarak çıkart
-      setPdfUrl(output);
     };
 
-    loadImages();
+    await loadImages(); // Resimlerin yüklenmesini bekle
+    
+    const output = pdf.output("datauristring"); // PDF'i Data URI olarak çıkart
+    setPdfUrl(output);
   };
 
   useEffect(() => {
@@ -108,9 +110,13 @@ function Report() {
       <h1 style={styles.title}>📄 Rapor Görüntüleme</h1>
       {pdfUrl ? (
         <div style={styles.pdfViewer}>
-          <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-            <button>Open PDF</button>
-          </a>
+          <iframe
+            src={pdfUrl}
+            width="100%"
+            height="100%"
+            title="PDF Viewer"
+            style={{ border: "none" }}
+          />
         </div>
       ) : (
         <p>Loading...</p>
@@ -154,12 +160,14 @@ const styles = {
   },
   pdfViewer: {
     width: "100%",
-    maxWidth: "800px", // Limit the width on larger screens
-    height: "75vh", // Allow the viewer to scale with viewport
+    height: "calc(100vh - 100px)", // Ekranın tamamını değil, biraz boşluk bırakacak şekilde
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     borderRadius: "8px",
     overflow: "hidden",
     backgroundColor: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 };
 
