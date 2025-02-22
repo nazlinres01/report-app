@@ -68,32 +68,32 @@ function Report() {
     pdf.text(notlar || "Belirtilmedi", margin, y, { maxWidth: pageWidth - 2 * margin });
     y += 20;
 
-    if (gorseller && gorseller.length > 0) {
-      addSectionTitle("Eklenen Görseller:");
-      gorseller.forEach((gorsel) => {
-        const img = new Image();
-        img.src = gorsel.src;
-        img.onload = () => {
-          const imgWidth = 100;
-          const imgHeight = (img.height * imgWidth) / img.width;
-          if (y + imgHeight > pdf.internal.pageSize.height - margin) {
-            pdf.addPage();
-            y = 20;
-          }
-          pdf.addImage(img, "JPEG", margin, y, imgWidth, imgHeight);
-          y += imgHeight + 10;
-
-          // Only set the URL once after the last image
-          if (gorseller.indexOf(gorsel) === gorseller.length - 1) {
-            const output = pdf.output("bloburl");
-            setPdfUrl(output);
-          }
-        };
-      });
-    } else {
-      const output = pdf.output("bloburl");
+    const loadImages = async () => {
+      if (gorseller && gorseller.length > 0) {
+        addSectionTitle("Eklenen Görseller:");
+        for (const gorsel of gorseller) {
+          const img = new Image();
+          img.src = gorsel.src;
+          await new Promise((resolve) => {
+            img.onload = () => {
+              const imgWidth = 100;
+              const imgHeight = (img.height * imgWidth) / img.width;
+              if (y + imgHeight > pdf.internal.pageSize.height - margin) {
+                pdf.addPage();
+                y = 20;
+              }
+              pdf.addImage(img, "JPEG", margin, y, imgWidth, imgHeight);
+              y += imgHeight + 10;
+              resolve();
+            };
+          });
+        }
+      }
+      const output = pdf.output("datauristring"); // data URL olarak çıkart
       setPdfUrl(output);
-    }
+    };
+
+    loadImages();
   };
 
   useEffect(() => {
