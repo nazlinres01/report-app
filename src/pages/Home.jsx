@@ -123,6 +123,7 @@ const styles = {
     justifyContent: "center",
     background: "#F4F4F4",
     padding: "0",
+    overflow: "hidden",
   },
   title: {
     fontSize: "24px",
@@ -135,15 +136,14 @@ const styles = {
     gap: "10px",
     width: "100%",
     justifyContent: "center",
+    flexWrap: "wrap",
   },
   input: {
-    flex: 1,
+    width: "180px",
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    minWidth: "120px",
-    maxWidth: "180px",
   },
   textarea: {
     width: "100%",
