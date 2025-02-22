@@ -109,6 +109,7 @@ const styles = {
     display: "flex",
     gap: "10px",
     width: "100%",
+    flexWrap: "wrap",
   },
   doubleInput: {
     flex: 1,
@@ -116,6 +117,7 @@ const styles = {
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
+    minWidth: "150px",
   },
   textarea: {
     width: "100%",
