@@ -95,10 +95,7 @@ function Home() {
             {gorseller.map((gorsel, index) => (
               <div key={index} style={styles.imageItem}>
                 <p style={styles.imageName}>{gorsel.name}</p>
-                <button
-                  onClick={() => handleGorselSil(index)}
-                  style={styles.deleteButton}
-                >
+                <button onClick={() => handleGorselSil(index)} style={styles.deleteButton}>
                   ❌
                 </button>
               </div>
@@ -118,22 +115,19 @@ function Home() {
 
 const styles = {
   page: {
-    width: "100%",
-    height: "100%",
+    width: "100vw",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
-    padding: "20px",
-    boxSizing: "border-box",
-    overflowX: "hidden", // Taşma engellendi
+    padding: "0",
   },
   title: {
     fontSize: "24px",
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: "20px",
   },
   row: {
     display: "flex",
@@ -141,18 +135,15 @@ const styles = {
     gap: "10px",
     width: "100%",
     justifyContent: "center",
-    flexWrap: "wrap", // Mobilde düzeni bozmadan sarma
-    marginBottom: "20px",
+    flexWrap: "wrap", // Mobil uyumlu olması için
   },
   input: {
     flex: 1,
-    maxWidth: "250px",
-    padding: "12px",
+    padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    marginBottom: "10px",
-    boxSizing: "border-box",
+    maxWidth: "180px", // Genişliği kısıtlamak için
   },
   textarea: {
     width: "100%",
@@ -162,8 +153,6 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
-    marginBottom: "15px",
-    boxSizing: "border-box",
   },
   button: {
     padding: "14px",
@@ -173,81 +162,34 @@ const styles = {
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
-    width: "100%",
-    maxWidth: "300px",
-    marginBottom: "20px",
   },
   error: {
     color: "red",
     fontSize: "16px",
     textAlign: "center",
-    marginBottom: "20px",
   },
   fileUpload: {
-    marginBottom: "20px",
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-  },
-  imageList: {
+    marginTop: "20px",
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
+    alignItems: "center",
+  },
+  imageList: {
+    marginTop: "10px",
   },
   imageItem: {
     display: "flex",
-    justifyContent: "space-between",
     alignItems: "center",
+    gap: "10px",
   },
   imageName: {
     fontSize: "14px",
-    color: "#555",
   },
   deleteButton: {
-    background: "none",
+    backgroundColor: "transparent",
     border: "none",
     color: "red",
     cursor: "pointer",
-  },
-  date: {
-    fontSize: "16px",
-    color: "#555",
-    marginBottom: "15px",
-  },
-  // Mobil uyumlu medya sorguları
-  "@media (max-width: 768px)": {
-    page: {
-      padding: "10px",
-    },
-    title: {
-      fontSize: "22px",
-      marginBottom: "15px",
-    },
-    input: {
-      maxWidth: "200px", // Mobilde daha dar input alanları
-    },
-    button: {
-      fontSize: "16px", // Buton font boyutunu küçültüyoruz
-      padding: "12px",
-    },
-    textarea: {
-      height: "80px", // Textarea'yı mobilde biraz daha küçük yapıyoruz
-    },
-  },
-  "@media (max-width: 480px)": {
-    title: {
-      fontSize: "20px",
-    },
-    input: {
-      maxWidth: "180px", // Mobilde daha da daraltıyoruz
-    },
-    button: {
-      fontSize: "14px",
-      padding: "10px",
-    },
-    textarea: {
-      fontSize: "14px", // Mobilde textareanın fontunu küçültüyoruz
-    },
   },
 };
 
