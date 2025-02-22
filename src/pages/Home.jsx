@@ -27,10 +27,13 @@ function Home() {
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    setGorseller(files.map((file) => ({
-      src: URL.createObjectURL(file),
-      name: file.name,
-    })));
+    setGorseller((prevGorseller) => [
+      ...prevGorseller,
+      ...files.map((file) => ({
+        src: URL.createObjectURL(file),
+        name: file.name,
+      })),
+    ]);
   };
 
   const handleRemoveImage = (index) => {

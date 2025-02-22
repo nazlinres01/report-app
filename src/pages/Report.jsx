@@ -6,7 +6,9 @@ import "jspdf-autotable";
 function Report() {
   const location = useLocation();
   const { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorseller } = location.state || {};
-  const [pdfUrl, setPdfUrl] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState(null);  // PDF URL'yi tutmak için state
+  const [pdfDoc, setPdfDoc] = useState(null);  // PDF dokümanını tutacak state
+  const [isPdfGenerated, setIsPdfGenerated] = useState(false);  // PDF'in oluşturulup oluşturulmadığını kontrol etmek için state
 
   const handleViewPDF = () => {
     const pdf = new jsPDF("p", "mm", "a4");
@@ -29,7 +31,7 @@ function Report() {
     pdf.setTextColor(90, 90, 90);
     pdf.text(`Rapor Sahibi: ${isim || "Bilinmeyen Kullanıcı"}`, margin, y);
     y += 8;
-    pdf.text(`Çalisma Süresi: ${calismaSuresi || "Belirtilmedi"} saat`, margin, y);
+    pdf.text(`Çalışma Süresi: ${calismaSuresi || "Belirtilmedi"} saat`, margin, y);
     y += 8;
     pdf.text(`Tarih: ${tarih || "Bilinmeyen Tarih"}`, margin, y);
     y += 20;
@@ -56,7 +58,7 @@ function Report() {
     pdf.text(hedefler || "Belirtilmedi", margin, y, { maxWidth: pageWidth - 2 * margin });
     y += 20;
 
-    addSectionTitle("Yapilanlar:");
+    addSectionTitle("Yapılanlar:");
     pdf.text(yapilanlar || "Belirtilmedi", margin, y, { maxWidth: pageWidth - 2 * margin });
     y += 20;
 
@@ -83,18 +85,31 @@ function Report() {
           pdf.addImage(img, "JPEG", margin, y, imgWidth, imgHeight);
           y += imgHeight + 10;
           const output = pdf.output("bloburl");
-          setPdfUrl(output);
+          setPdfUrl(output); // PDF URL'sini set ediyoruz
+          setPdfDoc(pdf); // PDF doc'u state'e kaydediyoruz
+          setIsPdfGenerated(true); // PDF'in oluşturulduğunu belirtiyoruz
         };
       });
     } else {
       const output = pdf.output("bloburl");
-      setPdfUrl(output);
+      setPdfUrl(output); // PDF URL'sini set ediyoruz
+      setPdfDoc(pdf); // PDF doc'u state'e kaydediyoruz
+      setIsPdfGenerated(true); // PDF'in oluşturulduğunu belirtiyoruz
+    }
+  };
+
+  // PDF İndirme Fonksiyonu
+  const handleDownloadPDF = () => {
+    if (pdfDoc) {
+      const timestamp = new Date().toISOString().replace(/[-T:\.Z]/g, "");
+      const pdfFileName = `Günlük_Rapor_${timestamp}.pdf`;
+      pdfDoc.save(pdfFileName); // PDF'i kaydet
     }
   };
 
   useEffect(() => {
     handleViewPDF();
-  }, []);
+  }, []); // İlk yüklemede PDF oluşturulacak
 
   return (
     <div style={styles.container}>
@@ -102,6 +117,7 @@ function Report() {
         <button style={styles.backButton}>← Geri Dön</button>
       </Link>
       <h1 style={styles.title}>📄 Rapor Görüntüleme</h1>
+
       {pdfUrl && (
         <div style={styles.pdfViewer}>
           <iframe
@@ -110,6 +126,13 @@ function Report() {
             title="Rapor PDF"
           />
         </div>
+      )}
+
+      {/* PDF Görüntüleme Sonrası İndir Butonu */}
+      {isPdfGenerated && (
+        <button onClick={handleDownloadPDF} style={styles.downloadButton}>
+          📥 PDF İndir
+        </button>
       )}
     </div>
   );
@@ -161,6 +184,16 @@ const styles = {
     width: "100%",
     height: "100%",
     border: "none",
+  },
+  downloadButton: {
+    marginTop: "20px",
+    padding: "12px 20px",
+    fontSize: "18px",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
   },
 };
 
