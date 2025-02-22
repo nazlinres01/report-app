@@ -136,19 +136,19 @@ const styles = {
   row: {
     display: "flex",
     flexDirection: "row",
-    gap: "15px", // Daha fazla boşluk
+    gap: "15px",
     width: "100%",
     justifyContent: "center",
-    flexWrap: "wrap", // Mobil uyum için satırlara kaymasını sağlar
+    flexWrap: "wrap", 
   },
   input: {
     flex: 1,
-    maxWidth: "250px", // Genişlikleri sınırladım
+    maxWidth: "250px",
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    marginBottom: "10px", // Inputlar arasında boşluk
+    marginBottom: "10px",
   },
   textarea: {
     width: "100%",
@@ -158,7 +158,7 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
-    marginBottom: "10px", // Textarea'lar arasında boşluk
+    marginBottom: "10px",
   },
   button: {
     padding: "14px",
@@ -169,7 +169,7 @@ const styles = {
     borderRadius: "8px",
     cursor: "pointer",
     width: "100%",
-    maxWidth: "300px", // Mobil uyum için butonun genişliği sınırlandırıldı
+    maxWidth: "300px",
   },
   error: {
     color: "red",
@@ -203,6 +203,23 @@ const styles = {
     fontSize: "16px",
     color: "#555",
     margin: "10px 0",
+  },
+  // Medya sorguları eklenerek mobil uyumluluk sağlandı
+  "@media (max-width: 600px)": {
+    title: {
+      fontSize: "20px",
+    },
+    input: {
+      maxWidth: "200px", // Mobilde input genişliklerini daralt
+    },
+    button: {
+      fontSize: "16px", // Buton font boyutunu küçült
+      maxWidth: "250px", // Buton genişliğini sınırladım
+    },
+    textarea: {
+      fontSize: "14px", // Textarea font boyutunu küçült
+      height: "80px", // Textarea yüksekliklerini biraz küçülttüm
+    },
   },
 };
 
