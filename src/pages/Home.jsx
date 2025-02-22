@@ -45,14 +45,46 @@ function Home() {
       <h2 style={styles.title}>📌 Günlük Rapor</h2>
 
       <div style={styles.row}>
-        <input type="text" value={isim} onChange={(e) => setIsim(e.target.value)} placeholder="Adınız" style={styles.input} />
-        <input type="number" value={calismaSuresi} onChange={(e) => setCalismaSuresi(e.target.value)} placeholder="Çalışma Süresi (saat)" style={styles.input} />
+        <input
+          type="text"
+          value={isim}
+          onChange={(e) => setIsim(e.target.value)}
+          placeholder="Adınız"
+          style={styles.input}
+        />
+        <input
+          type="number"
+          value={calismaSuresi}
+          onChange={(e) => setCalismaSuresi(e.target.value)}
+          placeholder="Çalışma Süresi (saat)"
+          style={styles.input}
+        />
       </div>
 
-      <textarea value={hedefler} onChange={(e) => setHedefler(e.target.value)} placeholder="Hedefleriniz" style={styles.textarea}></textarea>
-      <textarea value={yapilanlar} onChange={(e) => setYapilanlar(e.target.value)} placeholder="Yaptıklarınız" style={styles.textarea}></textarea>
-      <textarea value={tamamlanmayanlar} onChange={(e) => setTamamlanmayanlar(e.target.value)} placeholder="Tamamlanmayanlar" style={styles.textarea}></textarea>
-      <textarea value={notlar} onChange={(e) => setNotlar(e.target.value)} placeholder="Ekstra Notlar" style={styles.textarea}></textarea>
+      <textarea
+        value={hedefler}
+        onChange={(e) => setHedefler(e.target.value)}
+        placeholder="Hedefleriniz"
+        style={styles.textarea}
+      ></textarea>
+      <textarea
+        value={yapilanlar}
+        onChange={(e) => setYapilanlar(e.target.value)}
+        placeholder="Yaptıklarınız"
+        style={styles.textarea}
+      ></textarea>
+      <textarea
+        value={tamamlanmayanlar}
+        onChange={(e) => setTamamlanmayanlar(e.target.value)}
+        placeholder="Tamamlanmayanlar"
+        style={styles.textarea}
+      ></textarea>
+      <textarea
+        value={notlar}
+        onChange={(e) => setNotlar(e.target.value)}
+        placeholder="Ekstra Notlar"
+        style={styles.textarea}
+      ></textarea>
 
       <p style={styles.date}>📅 {tarih}</p>
 
@@ -63,7 +95,12 @@ function Home() {
             {gorseller.map((gorsel, index) => (
               <div key={index} style={styles.imageItem}>
                 <p style={styles.imageName}>{gorsel.name}</p>
-                <button onClick={() => handleGorselSil(index)} style={styles.deleteButton}>❌</button>
+                <button
+                  onClick={() => handleGorselSil(index)}
+                  style={styles.deleteButton}
+                >
+                  ❌
+                </button>
               </div>
             ))}
           </div>
@@ -72,7 +109,9 @@ function Home() {
 
       {hata && <p style={styles.error}>{hata}</p>}
 
-      <button onClick={handleClick} style={styles.button}>📄 Raporu Görüntüle</button>
+      <button onClick={handleClick} style={styles.button}>
+        📄 Raporu Görüntüle
+      </button>
     </div>
   );
 }
@@ -87,6 +126,7 @@ const styles = {
     justifyContent: "center",
     background: "#F4F4F4",
     padding: "0",
+    boxSizing: "border-box",
   },
   title: {
     fontSize: "24px",
@@ -96,16 +136,19 @@ const styles = {
   row: {
     display: "flex",
     flexDirection: "row",
-    gap: "10px",
+    gap: "15px", // Daha fazla boşluk
     width: "100%",
     justifyContent: "center",
+    flexWrap: "wrap", // Mobil uyum için satırlara kaymasını sağlar
   },
   input: {
     flex: 1,
+    maxWidth: "250px", // Genişlikleri sınırladım
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
+    marginBottom: "10px", // Inputlar arasında boşluk
   },
   textarea: {
     width: "100%",
@@ -115,6 +158,7 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
+    marginBottom: "10px", // Textarea'lar arasında boşluk
   },
   button: {
     padding: "14px",
@@ -124,11 +168,41 @@ const styles = {
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
+    width: "100%",
+    maxWidth: "300px", // Mobil uyum için butonun genişliği sınırlandırıldı
   },
   error: {
     color: "red",
     fontSize: "16px",
     textAlign: "center",
+  },
+  fileUpload: {
+    marginBottom: "15px",
+  },
+  imageList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+  },
+  imageItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  imageName: {
+    fontSize: "14px",
+    color: "#555",
+  },
+  deleteButton: {
+    background: "none",
+    border: "none",
+    color: "red",
+    cursor: "pointer",
+  },
+  date: {
+    fontSize: "16px",
+    color: "#555",
+    margin: "10px 0",
   },
 };
 
