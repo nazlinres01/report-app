@@ -28,27 +28,44 @@ function Home() {
     <div style={styles.page}>
       <h2 style={styles.title}>📌 Günlük Rapor</h2>
       
-      <div style={styles.doubleInputContainer}>
-        <input
-          type="text"
-          value={isim}
-          onChange={(e) => setIsim(e.target.value)}
-          placeholder="Adınız"
-          style={styles.doubleInput}
-        />
-        <input
-          type="number"
-          value={calismaSuresi}
-          onChange={(e) => setCalismaSuresi(e.target.value)}
-          placeholder="Çalışma Süresi (saat)"
-          style={styles.doubleInput}
-        />
-      </div>
-
-      <textarea value={hedefler} onChange={(e) => setHedefler(e.target.value)} placeholder="Hedefleriniz" style={styles.textarea}></textarea>
-      <textarea value={yapilanlar} onChange={(e) => setYapilanlar(e.target.value)} placeholder="Yaptıklarınız" style={styles.textarea}></textarea>
-      <textarea value={tamamlanmayanlar} onChange={(e) => setTamamlanmayanlar(e.target.value)} placeholder="Tamamlanmayanlar" style={styles.textarea}></textarea>
-      <textarea value={notlar} onChange={(e) => setNotlar(e.target.value)} placeholder="Ekstra Notlar" style={styles.textarea}></textarea>
+      <input
+        type="text"
+        value={isim}
+        onChange={(e) => setIsim(e.target.value)}
+        placeholder="Adınız"
+        style={styles.input}
+      />
+      <input
+        type="number"
+        value={calismaSuresi}
+        onChange={(e) => setCalismaSuresi(e.target.value)}
+        placeholder="Çalışma Süresi (saat)"
+        style={styles.input}
+      />
+      <textarea 
+        value={hedefler} 
+        onChange={(e) => setHedefler(e.target.value)} 
+        placeholder="Hedefleriniz" 
+        style={styles.textarea} 
+      />
+      <textarea 
+        value={yapilanlar} 
+        onChange={(e) => setYapilanlar(e.target.value)} 
+        placeholder="Yaptıklarınız" 
+        style={styles.textarea} 
+      />
+      <textarea 
+        value={tamamlanmayanlar} 
+        onChange={(e) => setTamamlanmayanlar(e.target.value)} 
+        placeholder="Tamamlanmayanlar" 
+        style={styles.textarea} 
+      />
+      <textarea 
+        value={notlar} 
+        onChange={(e) => setNotlar(e.target.value)} 
+        placeholder="Ekstra Notlar" 
+        style={styles.textarea} 
+      />
       
       <p style={styles.date}>📅 {tarih}</p>
       {hata && <p style={styles.error}>{hata}</p>}
@@ -63,7 +80,7 @@ const styles = {
     width: "100vw",
     height: "100vh",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column", // Keep all elements stacked vertically
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
@@ -74,33 +91,31 @@ const styles = {
     fontSize: "24px",
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: "20px", // Add some space between the title and inputs
   },
-  doubleInputContainer: {
-    display: "flex",
-    gap: "10px",
+  input: {
     width: "100%",
-    flexWrap: "wrap",
-    justifyContent: "center",
-  },
-  doubleInput: {
-    flex: "1",
+    maxWidth: "400px", // Keep a consistent width
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    minWidth: "140px",
+    margin: "10px 0", // Add vertical spacing between inputs
   },
   textarea: {
     width: "100%",
+    maxWidth: "400px", // Match the width of input fields
     height: "90px",
     padding: "12px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
-    margin: "10px 0",
+    margin: "10px 0", // Add vertical spacing between text areas
   },
   button: {
+    width: "100%",
+    maxWidth: "400px", // Match the width of input fields
     padding: "14px",
     fontSize: "18px",
     backgroundColor: "#002855",
@@ -108,11 +123,17 @@ const styles = {
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
+    marginTop: "20px", // Add space between button and last input
   },
   error: {
     color: "red",
     fontSize: "16px",
     textAlign: "center",
+  },
+  date: {
+    fontSize: "16px",
+    textAlign: "center",
+    margin: "10px 0", // Space between date and button
   },
 };
 
