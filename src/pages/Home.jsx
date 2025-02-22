@@ -10,7 +10,7 @@ function Home() {
   const [notlar, setNotlar] = useState("");
   const [hata, setHata] = useState("");
   const [tarih, setTarih] = useState(new Date().toLocaleDateString());
-  const [gorseller, setGorseller] = useState([]); // Görselleri bir dizi olarak tutacağız
+  const [gorseller, setGorseller] = useState([]); 
   const navigate = useNavigate();
 
   const handleClick = (e) => {
@@ -30,17 +30,14 @@ function Home() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setGorseller((prevGorseller) => [
-          ...prevGorseller,
-          { src: reader.result, name: file.name }, // Görselin adı ve verisini ekliyoruz
-        ]);
+        setGorseller((prevGorseller) => [...prevGorseller, { src: reader.result, name: file.name }]);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleGorselSil = (index) => {
-    setGorseller((prevGorseller) => prevGorseller.filter((_, i) => i !== index)); // Silinen görseli diziden kaldır
+    setGorseller((prevGorseller) => prevGorseller.filter((_, i) => i !== index));
   };
 
   return (
@@ -82,44 +79,46 @@ function Home() {
   );
 }
 
+// 🌟 RESPONSIVE TASARIM STİLLERİ
 const styles = {
   page: {
     width: "100vw",
-    height: "100vh",
+    minHeight: "100vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "#EAEAEA",
+    background: "#F4F4F4",
+    padding: "15px",
   },
   container: {
-    width: "90%",
-    maxWidth: "600px",
+    width: "100%",
+    maxWidth: "500px",
     background: "white",
-    padding: "25px",
+    padding: "20px",
     borderRadius: "12px",
-    boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
   },
   title: {
-    fontSize: "24px",
+    fontSize: "22px",
     fontWeight: "bold",
     color: "#002855",
-    marginBottom: "20px",
+    marginBottom: "15px",
     textAlign: "center",
     fontFamily: "Arial, sans-serif",
   },
   row: {
     display: "flex",
-    gap: "15px",
+    flexDirection: "column",
+    gap: "10px",
     width: "100%",
     marginBottom: "10px",
   },
   input: {
-    flex: 1,
+    width: "100%",
     padding: "12px",
-    fontSize: "16px",
+    fontSize: "14px",
     borderRadius: "8px",
     border: "1px solid #ccc",
     outline: "none",
@@ -127,52 +126,21 @@ const styles = {
   },
   textarea: {
     width: "100%",
-    height: "100px",
+    height: "80px",
     padding: "10px",
-    fontSize: "16px",
+    fontSize: "14px",
     borderRadius: "8px",
     border: "1px solid #ddd",
     outline: "none",
     resize: "none",
-    marginBottom: "8px",
+    marginBottom: "10px",
     backgroundColor: "#F9F9F9",
   },
   date: {
     fontSize: "14px",
     color: "#555",
     marginBottom: "10px",
-  },
-  fileUpload: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: "12px",
-  },
-  imageList: {
-    width: "100%",
-    padding: "10px 0",
-    borderTop: "1px solid #ddd",
-    marginTop: "10px",
-  },
-  imageItem: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "8px",
-  },
-  imageName: {
-    fontSize: "14px",
-    color: "#333",
-    fontWeight: "500",
-  },
-  deleteButton: {
-    background: "rgba(255, 0, 0, 0.6)",
-    color: "white",
-    border: "none",
-    padding: "5px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    fontSize: "14px",
+    textAlign: "center",
   },
   button: {
     padding: "12px",
@@ -193,5 +161,15 @@ const styles = {
     marginTop: "10px",
   },
 };
+
+// ✅ Mobil uyum için medya sorguları (CSS)
+const mediaQueries = `
+@media (max-width: 600px) {
+  textarea { height: 70px; font-size: 13px; }
+  input { font-size: 13px; }
+  button { font-size: 14px; padding: 10px; }
+}
+`;
+document.head.insertAdjacentHTML("beforeend", `<style>${mediaQueries}</style>`);
 
 export default Home;
