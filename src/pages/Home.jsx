@@ -10,7 +10,7 @@ function Home() {
   const [notlar, setNotlar] = useState("");
   const [hata, setHata] = useState("");
   const [tarih, setTarih] = useState(new Date().toLocaleDateString());
-  const [gorseller, setGorseller] = useState([]); 
+  const [gorseller, setGorseller] = useState([]);
   const navigate = useNavigate();
 
   const handleClick = (e) => {
@@ -79,97 +79,66 @@ function Home() {
   );
 }
 
-// 🌟 RESPONSIVE TASARIM STİLLERİ
+// 🌟 TAM EKRAN MOBİL UYUM STİLLERİ
 const styles = {
   page: {
     width: "100vw",
-    minHeight: "100vh",
+    height: "100vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
-    padding: "15px",
+    padding: "0",
   },
   container: {
     width: "100%",
-    maxWidth: "500px",
+    height: "100%",
     background: "white",
     padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
     display: "flex",
     flexDirection: "column",
+    overflowY: "auto",
   },
   title: {
-    fontSize: "22px",
+    fontSize: "24px",
     fontWeight: "bold",
-    color: "#002855",
-    marginBottom: "15px",
     textAlign: "center",
-    fontFamily: "Arial, sans-serif",
   },
   row: {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
-    width: "100%",
-    marginBottom: "10px",
   },
   input: {
     width: "100%",
-    padding: "12px",
-    fontSize: "14px",
+    padding: "14px",
+    fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    outline: "none",
-    backgroundColor: "#F9F9F9",
   },
   textarea: {
     width: "100%",
-    height: "80px",
-    padding: "10px",
-    fontSize: "14px",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
-    outline: "none",
-    resize: "none",
-    marginBottom: "10px",
-    backgroundColor: "#F9F9F9",
-  },
-  date: {
-    fontSize: "14px",
-    color: "#555",
-    marginBottom: "10px",
-    textAlign: "center",
-  },
-  button: {
+    height: "90px",
     padding: "12px",
     fontSize: "16px",
-    fontWeight: "bold",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    resize: "none",
+  },
+  button: {
+    padding: "14px",
+    fontSize: "18px",
     backgroundColor: "#002855",
     color: "white",
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
-    transition: "background 0.3s",
-    width: "100%",
-    boxShadow: "0px 3px 6px rgba(0,0,0,0.2)",
   },
   error: {
     color: "red",
-    fontSize: "14px",
-    marginTop: "10px",
+    fontSize: "16px",
+    textAlign: "center",
   },
 };
-
-// ✅ Mobil uyum için medya sorguları (CSS)
-const mediaQueries = `
-@media (max-width: 600px) {
-  textarea { height: 70px; font-size: 13px; }
-  input { font-size: 13px; }
-  button { font-size: 14px; padding: 10px; }
-}
-`;
-document.head.insertAdjacentHTML("beforeend", `<style>${mediaQueries}</style>`);
 
 export default Home;
