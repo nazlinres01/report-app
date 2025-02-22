@@ -10,6 +10,7 @@ function Home() {
   const [notlar, setNotlar] = useState("");
   const [hata, setHata] = useState("");
   const [tarih, setTarih] = useState(new Date().toLocaleDateString());
+  const [gorseller, setGorseller] = useState([]);
   const navigate = useNavigate();
 
   const handleClick = (e) => {
@@ -19,9 +20,21 @@ function Home() {
     } else {
       setHata("");
       navigate("/report", {
-        state: { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih },
+        state: { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorseller },
       });
     }
+  };
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setGorseller(files.map((file) => ({
+      src: URL.createObjectURL(file),
+      name: file.name,
+    })));
+  };
+
+  const handleRemoveImage = (index) => {
+    setGorseller((prevGorseller) => prevGorseller.filter((_, i) => i !== index));
   };
 
   return (
@@ -66,7 +79,27 @@ function Home() {
         placeholder="Ekstra Notlar" 
         style={styles.textarea} 
       />
-      
+
+      <div style={styles.imageUpload}>
+        <input
+          type="file"
+          multiple
+          onChange={handleFileChange}
+          style={styles.fileInput}
+        />
+        <div style={styles.imageList}>
+          {gorseller.map((gorsel, index) => (
+            <div key={index} style={styles.imageItem}>
+              <span>{gorsel.name}</span>
+              <button 
+                onClick={() => handleRemoveImage(index)} 
+                style={styles.removeButton}>❌
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <p style={styles.date}>📅 {tarih}</p>
       {hata && <p style={styles.error}>{hata}</p>}
       
@@ -80,7 +113,7 @@ const styles = {
     width: "100vw",
     height: "100vh",
     display: "flex",
-    flexDirection: "column", // Keep all elements stacked vertically
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
@@ -91,31 +124,31 @@ const styles = {
     fontSize: "24px",
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: "20px", // Add some space between the title and inputs
+    marginBottom: "20px",
   },
   input: {
     width: "100%",
-    maxWidth: "400px", // Keep a consistent width
+    maxWidth: "400px",
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    margin: "10px 0", // Add vertical spacing between inputs
+    margin: "10px 0",
   },
   textarea: {
     width: "100%",
-    maxWidth: "400px", // Match the width of input fields
+    maxWidth: "400px",
     height: "90px",
     padding: "12px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
-    margin: "10px 0", // Add vertical spacing between text areas
+    margin: "10px 0",
   },
   button: {
     width: "100%",
-    maxWidth: "400px", // Match the width of input fields
+    maxWidth: "400px",
     padding: "14px",
     fontSize: "18px",
     backgroundColor: "#002855",
@@ -123,7 +156,7 @@ const styles = {
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
-    marginTop: "20px", // Add space between button and last input
+    marginTop: "20px",
   },
   error: {
     color: "red",
@@ -133,7 +166,37 @@ const styles = {
   date: {
     fontSize: "16px",
     textAlign: "center",
-    margin: "10px 0", // Space between date and button
+    margin: "10px 0",
+  },
+  imageUpload: {
+    marginTop: "20px",
+    textAlign: "center",
+  },
+  fileInput: {
+    marginBottom: "10px",
+  },
+  imageList: {
+    marginTop: "10px",
+    width: "100%",
+    maxWidth: "400px",
+    listStyleType: "none",
+    padding: "0",
+  },
+  imageItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "8px",
+    padding: "5px",
+    backgroundColor: "#f0f0f0",
+    borderRadius: "4px",
+  },
+  removeButton: {
+    background: "transparent",
+    border: "none",
+    color: "red",
+    fontSize: "20px",
+    cursor: "pointer",
   },
 };
 
