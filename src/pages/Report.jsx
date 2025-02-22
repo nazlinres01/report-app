@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
-import "jspdf-autotable"; 
+import "jspdf-autotable";
 
 function Report() {
   const location = useLocation();
@@ -108,7 +108,6 @@ function Report() {
             src={pdfUrl}
             style={styles.iframe}
             title="Rapor PDF"
-            sandbox="allow-same-origin allow-scripts"
           />
         </div>
       )}
