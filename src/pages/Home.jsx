@@ -10,7 +10,7 @@ function Home() {
   const [notlar, setNotlar] = useState("");
   const [hata, setHata] = useState("");
   const [tarih, setTarih] = useState(new Date().toLocaleDateString());
-  const [gorsel, setGorsel] = useState(null);
+  const [gorseller, setGorseller] = useState([]); // Görselleri bir dizi olarak tutacağız
   const navigate = useNavigate();
 
   const handleClick = (e) => {
@@ -19,8 +19,8 @@ function Home() {
       setHata("⚠️ Lütfen gerekli alanları doldurun!");
     } else {
       setHata("");
-      navigate("/rapor", {
-        state: { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorsel },
+      navigate("/report", {
+        state: { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorseller },
       });
     }
   };
@@ -30,10 +30,17 @@ function Home() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setGorsel(reader.result);
+        setGorseller((prevGorseller) => [
+          ...prevGorseller,
+          { src: reader.result, name: file.name }, // Görselin adı ve verisini ekliyoruz
+        ]);
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleGorselSil = (index) => {
+    setGorseller((prevGorseller) => prevGorseller.filter((_, i) => i !== index)); // Silinen görseli diziden kaldır
   };
 
   return (
@@ -55,7 +62,16 @@ function Home() {
 
         <div style={styles.fileUpload}>
           <input type="file" onChange={handleGorselYukle} />
-          {gorsel && <img src={gorsel} alt="Yüklenen görsel" style={styles.image} />}
+          {gorseller.length > 0 && (
+            <div style={styles.imageList}>
+              {gorseller.map((gorsel, index) => (
+                <div key={index} style={styles.imageItem}>
+                  <p style={styles.imageName}>{gorsel.name}</p>
+                  <button onClick={() => handleGorselSil(index)} style={styles.deleteButton}>❌</button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {hata && <p style={styles.error}>{hata}</p>}
@@ -132,13 +148,31 @@ const styles = {
     alignItems: "center",
     marginBottom: "12px",
   },
-  image: {
-    width: "100px",
-    height: "100px",
-    objectFit: "cover",
-    borderRadius: "8px",
-    marginTop: "8px",
-    boxShadow: "0px 2px 5px rgba(0,0,0,0.2)",
+  imageList: {
+    width: "100%",
+    padding: "10px 0",
+    borderTop: "1px solid #ddd",
+    marginTop: "10px",
+  },
+  imageItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "8px",
+  },
+  imageName: {
+    fontSize: "14px",
+    color: "#333",
+    fontWeight: "500",
+  },
+  deleteButton: {
+    background: "rgba(255, 0, 0, 0.6)",
+    color: "white",
+    border: "none",
+    padding: "5px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    fontSize: "14px",
   },
   button: {
     padding: "12px",
