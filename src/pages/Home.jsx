@@ -122,8 +122,8 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     background: "#F4F4F4",
-    padding: "0",
-    overflow: "hidden",
+    padding: "20px",
+    boxSizing: "border-box",
   },
   title: {
     fontSize: "24px",
@@ -153,6 +153,7 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ddd",
     resize: "none",
+    margin: "10px 0",
   },
   button: {
     padding: "14px",
