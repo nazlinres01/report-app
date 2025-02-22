@@ -10,7 +10,6 @@ function Home() {
   const [notlar, setNotlar] = useState("");
   const [hata, setHata] = useState("");
   const [tarih, setTarih] = useState(new Date().toLocaleDateString());
-  const [gorseller, setGorseller] = useState([]);
   const navigate = useNavigate();
 
   const handleClick = (e) => {
@@ -20,7 +19,7 @@ function Home() {
     } else {
       setHata("");
       navigate("/report", {
-        state: { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorseller },
+        state: { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih },
       });
     }
   };
@@ -29,52 +28,29 @@ function Home() {
     <div style={styles.page}>
       <h2 style={styles.title}>📌 Günlük Rapor</h2>
       
-      <div style={styles.row}>
-        <div style={styles.doubleInputContainer}>
-          <input
-            type="text"
-            value={isim}
-            onChange={(e) => setIsim(e.target.value)}
-            placeholder="Adınız"
-            style={styles.doubleInput}
-          />
-          <input
-            type="number"
-            value={calismaSuresi}
-            onChange={(e) => setCalismaSuresi(e.target.value)}
-            placeholder="Çalışma Süresi (saat)"
-            style={styles.doubleInput}
-          />
-        </div>
+      <div style={styles.doubleInputContainer}>
+        <input
+          type="text"
+          value={isim}
+          onChange={(e) => setIsim(e.target.value)}
+          placeholder="Adınız"
+          style={styles.doubleInput}
+        />
+        <input
+          type="number"
+          value={calismaSuresi}
+          onChange={(e) => setCalismaSuresi(e.target.value)}
+          placeholder="Çalışma Süresi (saat)"
+          style={styles.doubleInput}
+        />
       </div>
 
-      <textarea
-        value={hedefler}
-        onChange={(e) => setHedefler(e.target.value)}
-        placeholder="Hedefleriniz"
-        style={styles.textarea}
-      ></textarea>
-      <textarea
-        value={yapilanlar}
-        onChange={(e) => setYapilanlar(e.target.value)}
-        placeholder="Yaptıklarınız"
-        style={styles.textarea}
-      ></textarea>
-      <textarea
-        value={tamamlanmayanlar}
-        onChange={(e) => setTamamlanmayanlar(e.target.value)}
-        placeholder="Tamamlanmayanlar"
-        style={styles.textarea}
-      ></textarea>
-      <textarea
-        value={notlar}
-        onChange={(e) => setNotlar(e.target.value)}
-        placeholder="Ekstra Notlar"
-        style={styles.textarea}
-      ></textarea>
+      <textarea value={hedefler} onChange={(e) => setHedefler(e.target.value)} placeholder="Hedefleriniz" style={styles.textarea}></textarea>
+      <textarea value={yapilanlar} onChange={(e) => setYapilanlar(e.target.value)} placeholder="Yaptıklarınız" style={styles.textarea}></textarea>
+      <textarea value={tamamlanmayanlar} onChange={(e) => setTamamlanmayanlar(e.target.value)} placeholder="Tamamlanmayanlar" style={styles.textarea}></textarea>
+      <textarea value={notlar} onChange={(e) => setNotlar(e.target.value)} placeholder="Ekstra Notlar" style={styles.textarea}></textarea>
       
       <p style={styles.date}>📅 {tarih}</p>
-      
       {hata && <p style={styles.error}>{hata}</p>}
       
       <button onClick={handleClick} style={styles.button}>📄 Raporu Görüntüle</button>
@@ -99,25 +75,20 @@ const styles = {
     fontWeight: "bold",
     textAlign: "center",
   },
-  row: {
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
-    marginBottom: "10px",
-  },
   doubleInputContainer: {
     display: "flex",
     gap: "10px",
     width: "100%",
     flexWrap: "wrap",
+    justifyContent: "center",
   },
   doubleInput: {
-    flex: 1,
+    flex: "1",
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    minWidth: "150px",
+    minWidth: "140px",
   },
   textarea: {
     width: "100%",
