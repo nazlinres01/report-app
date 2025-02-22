@@ -104,7 +104,12 @@ function Report() {
       <h1 style={styles.title}>📄 Rapor Görüntüleme</h1>
       {pdfUrl && (
         <div style={styles.pdfViewer}>
-          <iframe src={pdfUrl} style={styles.iframe} title="Rapor PDF" />
+          <iframe
+            src={pdfUrl}
+            style={styles.iframe}
+            title="Rapor PDF"
+            sandbox="allow-same-origin allow-scripts"
+          />
         </div>
       )}
     </div>
@@ -122,6 +127,7 @@ const styles = {
     backgroundColor: "#f4f4f4",
     position: "relative",
     overflow: "hidden",
+    padding: "20px",
   },
   backButton: {
     position: "absolute",
@@ -144,8 +150,9 @@ const styles = {
     textAlign: "center",
   },
   pdfViewer: {
-    width: "90vw",
-    height: "75vh",
+    width: "100%",
+    maxWidth: "800px", // Limit the width on larger screens
+    height: "75vh", // Allow the viewer to scale with viewport
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     borderRadius: "8px",
     overflow: "hidden",
