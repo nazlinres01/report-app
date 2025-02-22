@@ -29,7 +29,7 @@ function Report() {
     pdf.setTextColor(90, 90, 90);
     pdf.text(`Rapor Sahibi: ${isim || "Bilinmeyen Kullanıcı"}`, margin, y);
     y += 8;
-    pdf.text(`Çalisma Süresi: ${calismaSuresi || "Belirtilmedi"} saat`, margin, y);
+    pdf.text(`Çalışma Süresi: ${calismaSuresi || "Belirtilmedi"} saat`, margin, y);
     y += 8;
     pdf.text(`Tarih: ${tarih || "Bilinmeyen Tarih"}`, margin, y);
     y += 20;
@@ -70,7 +70,7 @@ function Report() {
 
     if (gorseller && gorseller.length > 0) {
       addSectionTitle("Eklenen Görseller:");
-      gorseller.forEach((gorsel, index) => {
+      gorseller.forEach((gorsel) => {
         const img = new Image();
         img.src = gorsel.src;
         img.onload = () => {
@@ -82,8 +82,12 @@ function Report() {
           }
           pdf.addImage(img, "JPEG", margin, y, imgWidth, imgHeight);
           y += imgHeight + 10;
-          const output = pdf.output("bloburl");
-          setPdfUrl(output);
+
+          // Only set the URL once after the last image
+          if (gorseller.indexOf(gorsel) === gorseller.length - 1) {
+            const output = pdf.output("bloburl");
+            setPdfUrl(output);
+          }
         };
       });
     } else {
@@ -102,14 +106,14 @@ function Report() {
         <button style={styles.backButton}>← Geri Dön</button>
       </Link>
       <h1 style={styles.title}>📄 Rapor Görüntüleme</h1>
-      {pdfUrl && (
+      {pdfUrl ? (
         <div style={styles.pdfViewer}>
-          <iframe
-            src={pdfUrl}
-            style={styles.iframe}
-            title="Rapor PDF"
-          />
+          <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+            <button>Open PDF</button>
+          </a>
         </div>
+      ) : (
+        <p>Loading...</p>
       )}
     </div>
   );
@@ -156,11 +160,6 @@ const styles = {
     borderRadius: "8px",
     overflow: "hidden",
     backgroundColor: "white",
-  },
-  iframe: {
-    width: "100%",
-    height: "100%",
-    border: "none",
   },
 };
 
