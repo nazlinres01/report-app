@@ -34,14 +34,14 @@ function Home() {
           value={isim}
           onChange={(e) => setIsim(e.target.value)}
           placeholder="Adınız"
-          style={styles.input}
+          style={styles.doubleInput}
         />
         <input
           type="number"
           value={calismaSuresi}
           onChange={(e) => setCalismaSuresi(e.target.value)}
           placeholder="Çalışma Süresi (saat)"
-          style={styles.input}
+          style={styles.doubleInput}
         />
       </div>
 
@@ -82,18 +82,16 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
   },
-  input: {
-    width: "100%",
-    maxWidth: "400px", // Ensure consistent size across inputs
+  doubleInput: {
+    flex: "1",
     padding: "14px",
     fontSize: "16px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    margin: "10px 0",
+    minWidth: "140px",
   },
   textarea: {
     width: "100%",
-    maxWidth: "400px", // Match width of input fields
     height: "90px",
     padding: "12px",
     fontSize: "16px",
@@ -103,8 +101,6 @@ const styles = {
     margin: "10px 0",
   },
   button: {
-    width: "100%",
-    maxWidth: "400px", // Match width of input fields
     padding: "14px",
     fontSize: "18px",
     backgroundColor: "#002855",
@@ -112,17 +108,11 @@ const styles = {
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
-    marginTop: "20px",
   },
   error: {
     color: "red",
     fontSize: "16px",
     textAlign: "center",
-  },
-  date: {
-    fontSize: "16px",
-    textAlign: "center",
-    margin: "10px 0",
   },
 };
 
