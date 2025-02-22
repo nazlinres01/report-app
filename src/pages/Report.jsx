@@ -8,13 +8,12 @@ function Report() {
   const { isim, calismaSuresi, hedefler, yapilanlar, tamamlanmayanlar, notlar, tarih, gorseller } = location.state || {};
   const [pdfUrl, setPdfUrl] = useState(null);
 
-  const handleViewPDF = async () => {
+  const handleViewPDF = () => {
     const pdf = new jsPDF("p", "mm", "a4");
     const pageWidth = pdf.internal.pageSize.getWidth();
     const margin = 20;
     let y = 30;
 
-    // PDF içeriğini oluşturma
     pdf.setTextColor(50, 50, 50);
     pdf.setFontSize(26);
     pdf.setFont("times", "bold");
@@ -30,7 +29,7 @@ function Report() {
     pdf.setTextColor(90, 90, 90);
     pdf.text(`Rapor Sahibi: ${isim || "Bilinmeyen Kullanıcı"}`, margin, y);
     y += 8;
-    pdf.text(`Çalışma Süresi: ${calismaSuresi || "Belirtilmedi"} saat`, margin, y);
+    pdf.text(`Çalisma Süresi: ${calismaSuresi || "Belirtilmedi"} saat`, margin, y);
     y += 8;
     pdf.text(`Tarih: ${tarih || "Bilinmeyen Tarih"}`, margin, y);
     y += 20;
@@ -69,33 +68,28 @@ function Report() {
     pdf.text(notlar || "Belirtilmedi", margin, y, { maxWidth: pageWidth - 2 * margin });
     y += 20;
 
-    const loadImages = async () => {
-      if (gorseller && gorseller.length > 0) {
-        addSectionTitle("Eklenen Görseller:");
-        for (const gorsel of gorseller) {
-          const img = new Image();
-          img.src = gorsel.src;
-          await new Promise((resolve) => {
-            img.onload = () => {
-              const imgWidth = 100;
-              const imgHeight = (img.height * imgWidth) / img.width;
-              if (y + imgHeight > pdf.internal.pageSize.height - margin) {
-                pdf.addPage();
-                y = 20;
-              }
-              pdf.addImage(img, "JPEG", margin, y, imgWidth, imgHeight);
-              y += imgHeight + 10;
-              resolve();
-            };
-          });
-        }
-      }
-    };
-
-    await loadImages(); // Resimlerin yüklenmesini bekle
-    
-    const output = pdf.output("datauristring"); // PDF'i Data URI olarak çıkart
-    setPdfUrl(output);
+    if (gorseller && gorseller.length > 0) {
+      addSectionTitle("Eklenen Görseller:");
+      gorseller.forEach((gorsel, index) => {
+        const img = new Image();
+        img.src = gorsel.src;
+        img.onload = () => {
+          const imgWidth = 100;
+          const imgHeight = (img.height * imgWidth) / img.width;
+          if (y + imgHeight > pdf.internal.pageSize.height - margin) {
+            pdf.addPage();
+            y = 20;
+          }
+          pdf.addImage(img, "JPEG", margin, y, imgWidth, imgHeight);
+          y += imgHeight + 10;
+          const output = pdf.output("bloburl");
+          setPdfUrl(output);
+        };
+      });
+    } else {
+      const output = pdf.output("bloburl");
+      setPdfUrl(output);
+    }
   };
 
   useEffect(() => {
@@ -108,18 +102,14 @@ function Report() {
         <button style={styles.backButton}>← Geri Dön</button>
       </Link>
       <h1 style={styles.title}>📄 Rapor Görüntüleme</h1>
-      {pdfUrl ? (
+      {pdfUrl && (
         <div style={styles.pdfViewer}>
           <iframe
             src={pdfUrl}
-            width="100%"
-            height="100%"
-            title="PDF Viewer"
-            style={{ border: "none" }}
+            style={styles.iframe}
+            title="Rapor PDF"
           />
         </div>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );
@@ -160,14 +150,17 @@ const styles = {
   },
   pdfViewer: {
     width: "100%",
-    height: "calc(100vh - 100px)", // Ekranın tamamını değil, biraz boşluk bırakacak şekilde
+    maxWidth: "800px", // Limit the width on larger screens
+    height: "75vh", // Allow the viewer to scale with viewport
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     borderRadius: "8px",
     overflow: "hidden",
     backgroundColor: "white",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  iframe: {
+    width: "100%",
+    height: "100%",
+    border: "none",
   },
 };
 
